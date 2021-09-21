@@ -1,0 +1,11 @@
+table:
+  name: role
+  schema: auth
+is_enum: true
+select_permissions:
+- permission:
+    columns:
+    - id
+    - comment
+    filter: {}
+  role: user

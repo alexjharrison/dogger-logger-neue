@@ -1,12 +1,49 @@
 table:
   name: users
   schema: auth
+object_relationships:
+- name: role
+  using:
+    manual_configuration:
+      column_mapping:
+        user_role: id
+      insertion_order: null
+      remote_table:
+        name: role
+        schema: auth
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - email
+    - encrypted_password
+    - first_name
+    - last_name
+    - id
+    - user_role
+    - deleted_at
+  role: public
 select_permissions:
 - permission:
     columns:
+    - deleted_at
     - email
     - first_name
     - id
     - last_name
+    - user_role
     filter: {}
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - deleted_at
+    - email
+    - first_name
+    - last_name
+    filter:
+      id:
+        _eq: X-Hasura-User-Id
   role: user

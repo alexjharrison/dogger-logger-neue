@@ -1,0 +1,105 @@
+table:
+  name: dog
+  schema: public
+object_relationships:
+- name: status
+  using:
+    manual_configuration:
+      column_mapping:
+        dog_status: id
+      insertion_order: null
+      remote_table:
+        name: status
+        schema: public
+array_relationships:
+- name: walks
+  using:
+    foreign_key_constraint_on:
+      column: dog_id
+      table:
+        name: walk
+        schema: public
+insert_permissions:
+- permission:
+    backend_only: false
+    check:
+      _exists:
+        _table:
+          name: users
+          schema: auth
+        _where:
+          _and:
+          - id:
+              _eq: X-Hasura-User-Id
+          - role:
+              id:
+                _eq: manager
+    columns:
+    - id
+    - weight
+    - breed
+    - dog_status
+    - gender
+    - name
+    - birthdate
+    - created_at
+    - updated_at
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - birthdate
+    - breed
+    - created_at
+    - dog_status
+    - gender
+    - id
+    - name
+    - updated_at
+    - weight
+    filter:
+      dog_status:
+        _eq: adoptable
+  role: public
+- permission:
+    allow_aggregations: true
+    columns:
+    - birthdate
+    - breed
+    - created_at
+    - dog_status
+    - gender
+    - id
+    - name
+    - updated_at
+    - weight
+    filter:
+      deleted_at:
+        _is_null: true
+  role: user
+update_permissions:
+- permission:
+    check: null
+    columns:
+    - birthdate
+    - breed
+    - created_at
+    - deleted_at
+    - dog_status
+    - gender
+    - name
+    - updated_at
+    - weight
+    filter:
+      _exists:
+        _table:
+          name: users
+          schema: auth
+        _where:
+          _and:
+          - id:
+              _eq: X-Hasura-User-Id
+          - role:
+              id:
+                _eq: manager
+  role: user

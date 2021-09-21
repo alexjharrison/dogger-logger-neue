@@ -1,0 +1,50 @@
+table:
+  name: walk
+  schema: public
+object_relationships:
+- name: dog
+  using:
+    foreign_key_constraint_on: dog_id
+- name: walker
+  using:
+    foreign_key_constraint_on: walker_id
+insert_permissions:
+- permission:
+    backend_only: false
+    check: {}
+    columns:
+    - created_at
+    - dog_id
+    - dogs_seen
+    - dogs_seen_reacted
+    - id
+    - jump_handlage
+    - jumps
+    - medical_concern
+    - other_concerns
+    - peed
+    - pooped
+    - seen_dogs_reaction
+    - updated_at
+    set:
+      walker_id: x-hasura-User-Id
+  role: user
+select_permissions:
+- permission:
+    columns:
+    - id
+    - pooped
+    - peed
+    - medical_concern
+    - jumps
+    - jump_handlage
+    - dogs_seen_reacted
+    - seen_dogs_reaction
+    - dogs_seen
+    - other_concerns
+    - walker_id
+    - dog_id
+    - created_at
+    - updated_at
+    filter: {}
+  role: user
