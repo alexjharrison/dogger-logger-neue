@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "CommonJS",
+        "outDir": "./build",
+        "esModuleInterop": true,
+        "strict": true,
+    },
+    "include": [
+        "src/**/*",
+    ],
+}

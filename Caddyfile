@@ -1,0 +1,12 @@
+rocktalk.xyz
+
+handle_path /api/* {
+    reverse_proxy hasura:8080
+}
+
+handle {
+    root * /srv
+    encode gzip
+    try_files {path} /index.html
+    file_server
+}

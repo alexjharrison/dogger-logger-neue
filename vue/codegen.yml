@@ -1,0 +1,22 @@
+schema:
+  - http://hasura:8080/v1/graphql:
+      headers:
+        Content-Type: application/json
+        x-hasura-admin-secret: ${HASURA_SECRET}
+
+documents: src/**/*.graphql
+generates:
+  api.ts:
+    config:
+      transformUnderscore: true
+    plugins:
+      - typescript
+      - typescript-operations
+  src/api.ts:
+    config:
+      gqlImport: "@urql/vue#gql"
+      transformUnderscore: true
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-vue-urql

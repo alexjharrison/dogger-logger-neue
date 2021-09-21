@@ -1,0 +1,11 @@
+mutation Login($args: LoginArgs!) {
+  login(args: $args) {
+    token
+  }
+}
+
+mutation Register($args: RegisterArgs!) {
+  register(args: $args) {
+    token
+  }
+}

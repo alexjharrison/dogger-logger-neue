@@ -1,0 +1,24 @@
+actions:
+- name: login
+  definition:
+    kind: synchronous
+    handler: http://express:8000/webhook
+  permissions:
+  - role: public
+  - role: user
+- name: register
+  definition:
+    kind: synchronous
+    handler: http://express:8000/webhook
+  permissions:
+  - role: user
+  - role: public
+custom_types:
+  enums: []
+  input_objects:
+  - name: LoginArgs
+  - name: RegisterArgs
+  objects:
+  - name: LoginResult
+  - name: RegisterResult
+  scalars: []
