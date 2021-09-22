@@ -1,0 +1,29 @@
+fragment dogFragment on dog {
+  birthdate
+  breed
+  created_at
+  deleted_at
+  dog_status
+  gender
+  id
+  name
+  updated_at
+  status {
+    comment
+    id
+  }
+}
+
+mutation InsertDog($object: dog_insert_input!) {
+  insert_dog_one(object: $object) {
+    ...dogFragment
+  }
+}
+
+mutation UpdateDog($where: dog_bool_exp!, $_set: dog_set_input) {
+  update_dog(where: $where, _set: $_set) {
+    returning {
+      ...dogFragment
+    }
+  }
+}

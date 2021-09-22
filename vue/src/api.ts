@@ -2022,7 +2022,24 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'mutation_root', register?: Maybe<{ __typename?: 'RegisterResult', token: string }> };
 
-export type UserFieldsFragment = { __typename?: 'auth_users', id: number, first_name: string, last_name: string, email: string };
+export type DogFragmentFragment = { __typename?: 'dog', birthdate?: Maybe<any>, breed?: Maybe<string>, created_at: any, deleted_at?: Maybe<any>, dog_status: string, gender: string, id: number, name: string, updated_at: any, status?: Maybe<{ __typename?: 'status', comment: string, id: string }> };
+
+export type InsertDogMutationVariables = Exact<{
+  object: Dog_Insert_Input;
+}>;
+
+
+export type InsertDogMutation = { __typename?: 'mutation_root', insert_dog_one?: Maybe<{ __typename?: 'dog', birthdate?: Maybe<any>, breed?: Maybe<string>, created_at: any, deleted_at?: Maybe<any>, dog_status: string, gender: string, id: number, name: string, updated_at: any, status?: Maybe<{ __typename?: 'status', comment: string, id: string }> }> };
+
+export type UpdateDogMutationVariables = Exact<{
+  where: Dog_Bool_Exp;
+  _set?: Maybe<Dog_Set_Input>;
+}>;
+
+
+export type UpdateDogMutation = { __typename?: 'mutation_root', update_dog?: Maybe<{ __typename?: 'dog_mutation_response', returning: Array<{ __typename?: 'dog', birthdate?: Maybe<any>, breed?: Maybe<string>, created_at: any, deleted_at?: Maybe<any>, dog_status: string, gender: string, id: number, name: string, updated_at: any, status?: Maybe<{ __typename?: 'status', comment: string, id: string }> }> }> };
+
+export type Auth_UsersFragmentFragment = { __typename?: 'auth_users', email: string, first_name: string, id: number, last_name: string, user_role: string };
 
 export type UsersQueryVariables = Exact<{
   distinct_on?: Maybe<Array<Auth_Users_Select_Column> | Auth_Users_Select_Column>;
@@ -2033,25 +2050,59 @@ export type UsersQueryVariables = Exact<{
 }>;
 
 
-export type UsersQuery = { __typename?: 'query_root', auth_users: Array<{ __typename?: 'auth_users', id: number, first_name: string, last_name: string, email: string }> };
+export type UsersQuery = { __typename?: 'query_root', auth_users: Array<{ __typename?: 'auth_users', email: string, first_name: string, id: number, last_name: string, user_role: string }> };
 
-export type UsersStreamSubscriptionVariables = Exact<{
-  distinct_on?: Maybe<Array<Auth_Users_Select_Column> | Auth_Users_Select_Column>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Auth_Users_Order_By> | Auth_Users_Order_By>;
-  where?: Maybe<Auth_Users_Bool_Exp>;
+export type WalkFragmentFragment = { __typename?: 'walk', created_at: any, dog_id: number, dogs_seen: number, dogs_seen_reacted: number, id: number, jump_handlage?: Maybe<string>, jumps: number, medical_concern?: Maybe<string>, other_concerns: string, peed: boolean, pooped: boolean, seen_dogs_reaction?: Maybe<string>, updated_at: any, walker_id: number };
+
+export type AddWalkMutationVariables = Exact<{
+  object: Walk_Insert_Input;
 }>;
 
 
-export type UsersStreamSubscription = { __typename?: 'subscription_root', auth_users: Array<{ __typename?: 'auth_users', id: number, first_name: string, last_name: string, email: string }> };
+export type AddWalkMutation = { __typename?: 'mutation_root', insert_walk_one?: Maybe<{ __typename?: 'walk', created_at: any, dog_id: number, dogs_seen: number, dogs_seen_reacted: number, id: number, jump_handlage?: Maybe<string>, jumps: number, medical_concern?: Maybe<string>, other_concerns: string, peed: boolean, pooped: boolean, seen_dogs_reaction?: Maybe<string>, updated_at: any, walker_id: number, walker: { __typename?: 'auth_users', email: string, first_name: string, id: number, last_name: string, user_role: string } }> };
 
-export const UserFieldsFragmentDoc = gql`
-    fragment UserFields on auth_users {
+export const DogFragmentFragmentDoc = gql`
+    fragment dogFragment on dog {
+  birthdate
+  breed
+  created_at
+  deleted_at
+  dog_status
+  gender
   id
-  first_name
-  last_name
+  name
+  updated_at
+  status {
+    comment
+    id
+  }
+}
+    `;
+export const Auth_UsersFragmentFragmentDoc = gql`
+    fragment auth_usersFragment on auth_users {
   email
+  first_name
+  id
+  last_name
+  user_role
+}
+    `;
+export const WalkFragmentFragmentDoc = gql`
+    fragment walkFragment on walk {
+  created_at
+  dog_id
+  dogs_seen
+  dogs_seen_reacted
+  id
+  jump_handlage
+  jumps
+  medical_concern
+  other_concerns
+  peed
+  pooped
+  seen_dogs_reaction
+  updated_at
+  walker_id
 }
     `;
 export const LoginDocument = gql`
@@ -2076,6 +2127,30 @@ export const RegisterDocument = gql`
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
+export const InsertDogDocument = gql`
+    mutation InsertDog($object: dog_insert_input!) {
+  insert_dog_one(object: $object) {
+    ...dogFragment
+  }
+}
+    ${DogFragmentFragmentDoc}`;
+
+export function useInsertDogMutation() {
+  return Urql.useMutation<InsertDogMutation, InsertDogMutationVariables>(InsertDogDocument);
+};
+export const UpdateDogDocument = gql`
+    mutation UpdateDog($where: dog_bool_exp!, $_set: dog_set_input) {
+  update_dog(where: $where, _set: $_set) {
+    returning {
+      ...dogFragment
+    }
+  }
+}
+    ${DogFragmentFragmentDoc}`;
+
+export function useUpdateDogMutation() {
+  return Urql.useMutation<UpdateDogMutation, UpdateDogMutationVariables>(UpdateDogDocument);
+};
 export const UsersDocument = gql`
     query Users($distinct_on: [auth_users_select_column!], $limit: Int, $offset: Int, $order_by: [auth_users_order_by!], $where: auth_users_bool_exp) {
   auth_users(
@@ -2085,28 +2160,26 @@ export const UsersDocument = gql`
     order_by: $order_by
     where: $where
   ) {
-    ...UserFields
+    ...auth_usersFragment
   }
 }
-    ${UserFieldsFragmentDoc}`;
+    ${Auth_UsersFragmentFragmentDoc}`;
 
 export function useUsersQuery(options: Omit<Urql.UseQueryArgs<never, UsersQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<UsersQuery>({ query: UsersDocument, ...options });
 };
-export const UsersStreamDocument = gql`
-    subscription UsersStream($distinct_on: [auth_users_select_column!], $limit: Int, $offset: Int, $order_by: [auth_users_order_by!], $where: auth_users_bool_exp) {
-  auth_users(
-    distinct_on: $distinct_on
-    limit: $limit
-    offset: $offset
-    order_by: $order_by
-    where: $where
-  ) {
-    ...UserFields
+export const AddWalkDocument = gql`
+    mutation AddWalk($object: walk_insert_input!) {
+  insert_walk_one(object: $object) {
+    ...walkFragment
+    walker {
+      ...auth_usersFragment
+    }
   }
 }
-    ${UserFieldsFragmentDoc}`;
+    ${WalkFragmentFragmentDoc}
+${Auth_UsersFragmentFragmentDoc}`;
 
-export function useUsersStreamSubscription<R = UsersStreamSubscription>(options: Omit<Urql.UseSubscriptionArgs<never, UsersStreamSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandlerArg<UsersStreamSubscription, R>) {
-  return Urql.useSubscription<UsersStreamSubscription, R, UsersStreamSubscriptionVariables>({ query: UsersStreamDocument, ...options }, handler);
+export function useAddWalkMutation() {
+  return Urql.useMutation<AddWalkMutation, AddWalkMutationVariables>(AddWalkDocument);
 };

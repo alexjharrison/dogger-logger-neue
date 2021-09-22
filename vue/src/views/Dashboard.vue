@@ -2,7 +2,7 @@
   <div>Logged In</div>
   <h1>All Users</h1>
   <ul>
-    <li v-for="user in data?.auth_users">
+    <li v-for="user in data?.auth_users" :key="user.id">
       {{ user.first_name }} {{ user.last_name }}
       <span class="p-text-secondary">({{ user.email }})</span>
     </li>

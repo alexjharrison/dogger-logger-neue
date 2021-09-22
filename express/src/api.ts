@@ -2019,7 +2019,24 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'mutation_root', register?: Maybe<{ __typename?: 'RegisterResult', token: string }> };
 
-export type UserFieldsFragment = { __typename?: 'auth_users', id: number, first_name: string, last_name: string, email: string };
+export type DogFragmentFragment = { __typename?: 'dog', birthdate?: Maybe<any>, breed?: Maybe<string>, created_at: any, deleted_at?: Maybe<any>, dog_status: string, gender: string, id: number, name: string, updated_at: any, status?: Maybe<{ __typename?: 'status', comment: string, id: string }> };
+
+export type InsertDogMutationVariables = Exact<{
+  object: Dog_Insert_Input;
+}>;
+
+
+export type InsertDogMutation = { __typename?: 'mutation_root', insert_dog_one?: Maybe<{ __typename?: 'dog', birthdate?: Maybe<any>, breed?: Maybe<string>, created_at: any, deleted_at?: Maybe<any>, dog_status: string, gender: string, id: number, name: string, updated_at: any, status?: Maybe<{ __typename?: 'status', comment: string, id: string }> }> };
+
+export type UpdateDogMutationVariables = Exact<{
+  where: Dog_Bool_Exp;
+  _set?: Maybe<Dog_Set_Input>;
+}>;
+
+
+export type UpdateDogMutation = { __typename?: 'mutation_root', update_dog?: Maybe<{ __typename?: 'dog_mutation_response', returning: Array<{ __typename?: 'dog', birthdate?: Maybe<any>, breed?: Maybe<string>, created_at: any, deleted_at?: Maybe<any>, dog_status: string, gender: string, id: number, name: string, updated_at: any, status?: Maybe<{ __typename?: 'status', comment: string, id: string }> }> }> };
+
+export type Auth_UsersFragmentFragment = { __typename?: 'auth_users', email: string, first_name: string, id: number, last_name: string, user_role: string };
 
 export type UsersQueryVariables = Exact<{
   distinct_on?: Maybe<Array<Auth_Users_Select_Column> | Auth_Users_Select_Column>;
@@ -2030,15 +2047,13 @@ export type UsersQueryVariables = Exact<{
 }>;
 
 
-export type UsersQuery = { __typename?: 'query_root', auth_users: Array<{ __typename?: 'auth_users', id: number, first_name: string, last_name: string, email: string }> };
+export type UsersQuery = { __typename?: 'query_root', auth_users: Array<{ __typename?: 'auth_users', email: string, first_name: string, id: number, last_name: string, user_role: string }> };
 
-export type UsersStreamSubscriptionVariables = Exact<{
-  distinct_on?: Maybe<Array<Auth_Users_Select_Column> | Auth_Users_Select_Column>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Auth_Users_Order_By> | Auth_Users_Order_By>;
-  where?: Maybe<Auth_Users_Bool_Exp>;
+export type WalkFragmentFragment = { __typename?: 'walk', created_at: any, dog_id: number, dogs_seen: number, dogs_seen_reacted: number, id: number, jump_handlage?: Maybe<string>, jumps: number, medical_concern?: Maybe<string>, other_concerns: string, peed: boolean, pooped: boolean, seen_dogs_reaction?: Maybe<string>, updated_at: any, walker_id: number };
+
+export type AddWalkMutationVariables = Exact<{
+  object: Walk_Insert_Input;
 }>;
 
 
-export type UsersStreamSubscription = { __typename?: 'subscription_root', auth_users: Array<{ __typename?: 'auth_users', id: number, first_name: string, last_name: string, email: string }> };
+export type AddWalkMutation = { __typename?: 'mutation_root', insert_walk_one?: Maybe<{ __typename?: 'walk', created_at: any, dog_id: number, dogs_seen: number, dogs_seen_reacted: number, id: number, jump_handlage?: Maybe<string>, jumps: number, medical_concern?: Maybe<string>, other_concerns: string, peed: boolean, pooped: boolean, seen_dogs_reaction?: Maybe<string>, updated_at: any, walker_id: number, walker: { __typename?: 'auth_users', email: string, first_name: string, id: number, last_name: string, user_role: string } }> };

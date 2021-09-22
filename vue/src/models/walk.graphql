@@ -1,0 +1,25 @@
+fragment walkFragment on walk {
+  created_at
+  dog_id
+  dogs_seen
+  dogs_seen_reacted
+  id
+  jump_handlage
+  jumps
+  medical_concern
+  other_concerns
+  peed
+  pooped
+  seen_dogs_reaction
+  updated_at
+  walker_id
+}
+
+mutation AddWalk($object: walk_insert_input!) {
+  insert_walk_one(object: $object) {
+    ...walkFragment
+    walker {
+      ...auth_usersFragment
+    }
+  }
+}
